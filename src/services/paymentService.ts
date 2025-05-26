@@ -2,7 +2,8 @@
 import axios from 'axios';
 import { PaymentRequest, PaymentResponse } from '@/types/coffee';
 
-const API_BASE_URL = 'http://localhost:3000';
+// Use environment variable for API URL, fallback to localhost for development
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 // Configure axios with timeout and error handling
 const apiClient = axios.create({
@@ -28,16 +29,17 @@ export const processPayment = async (paymentData: PaymentRequest): Promise<Payme
     if (axios.isAxiosError(error)) {
       if (error.response) {
         // Server responded with error status
+        const errorData = error.response.data;
         return {
           success: false,
-          message: error.response.data?.message || 'Payment failed. Please try again.',
-          error: error.response.data?.error || 'SERVER_ERROR'
+          message: errorData?.message || 'Payment failed. Please try again.',
+          error: errorData?.error || 'SERVER_ERROR'
         };
       } else if (error.request) {
         // Network error
         return {
           success: false,
-          message: 'Network error. Please check your connection and try again.',
+          message: 'Unable to connect to payment service. Please check your connection.',
           error: 'NETWORK_ERROR'
         };
       }

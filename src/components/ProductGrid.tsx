@@ -8,7 +8,7 @@ const coffeeProducts: CoffeeProduct[] = [
     name: 'Espresso',
     description: 'Rich and bold single shot espresso',
     price: 150,
-    image: 'https://images.unsplash.com/photo-1510707577719-ae7c14805e76?w=400&h=300&fit=crop'
+    image: 'https://pin.it/4eamqgCw4'
   },
   {
     id: '2',
